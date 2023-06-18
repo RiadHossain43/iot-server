@@ -5,9 +5,10 @@
   <title>Centered Buttons</title>
   <style>
     /* Center the buttons */
-    *{
+    * {
       font-family: sans-serif;
     }
+
     .button-container {
       display: flex;
       justify-content: center;
@@ -62,10 +63,6 @@
         },
         body: JSON.stringify({ state: btnstate })
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-        })
         .catch(error => {
           console.error(error);
         });
@@ -74,9 +71,9 @@
     function updateDistance() {
       setInterval(() => {
         fetch("/state/sonar")
-          .then(response => response.json())
+          .then(response => response.text())
           .then(data => {
-            distanceSpan.innerText = data.data.state
+            distanceSpan.innerText = data
           })
           .catch(error => {
             console.error(error);
@@ -85,9 +82,9 @@
     }
     function initialiseButton() {
       fetch("/state/button")
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-          controlLedState(data.data.state)
+          controlLedState(data)
         })
         .catch(error => {
           console.error(error);

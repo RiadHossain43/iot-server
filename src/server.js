@@ -54,25 +54,13 @@ app.get("/", (req, res) => {
 });
 app.get("/state/:element", (req, res) => {
   const { element } = req.params;
-  res.status(200).json({
-    message: "Data retrived successfully",
-    data: {
-      element,
-      state: STATES[element],
-    },
-  });
+  res.status(200).send(`${STATES[element]}`);
 });
 app.post("/state/:element", (req, res) => {
   const { state } = req.body;
   const { element } = req.params;
   controlState(element, state);
-  res.status(200).json({
-    message: "Data updated successfully",
-    data: {
-      element,
-      state: STATES[element],
-    },
-  });
+  res.status(200).send(`${STATES[element]}`);
 });
 async function startServer() {
   const PORT = process.env.PORT || 8000;
