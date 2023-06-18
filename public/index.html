@@ -5,6 +5,9 @@
   <title>Centered Buttons</title>
   <style>
     /* Center the buttons */
+    *{
+      font-family: sans-serif;
+    }
     .button-container {
       display: flex;
       justify-content: center;
@@ -35,11 +38,12 @@
 <body>
   <div class="button-container">
     <button class="button" id="button1">Led (OFF)</button>
-    <button class="button">Button 2</button>
+    <p>Sonar distance is now <span id="distance">0</span></p>
   </div>
   <script>
     // Function to toggle Led state and send POST request
     var button1 = document.getElementById("button1");
+    var distanceSpan = document.getElementById("distance");
     function controlLedState(state) {
       if (state === "On") {
         button1.innerHTML = "Led (ON)";
@@ -50,13 +54,13 @@
       }
     }
     function toggleButton1() {
-      var state = button1.innerHTML.includes("ON") ? "Off" : "On";
+      var btnstate = button1.innerHTML.includes("ON") ? "Off" : "On";
       fetch("/state/button", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ state: state })
+        body: JSON.stringify({ state: btnstate })
       })
         .then(response => response.json())
         .then(data => {
@@ -65,9 +69,21 @@
         .catch(error => {
           console.error(error);
         });
-      controlLedState(state)
+      controlLedState(btnstate)
     }
-    (function () {
+    function updateDistance() {
+      setInterval(() => {
+        fetch("/state/sonar")
+          .then(response => response.json())
+          .then(data => {
+            distanceSpan.innerText = data.data.state
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      }, 2000)
+    }
+    function initialiseButton() {
       fetch("/state/button")
         .then(response => response.json())
         .then(data => {
@@ -76,6 +92,10 @@
         .catch(error => {
           console.error(error);
         });
+    }
+    (function () {
+      initialiseButton()
+      // updateDistance()
     })()
     // Add event listener to Led
     document.getElementById("button1").addEventListener("click", toggleButton1);

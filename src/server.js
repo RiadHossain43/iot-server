@@ -5,12 +5,17 @@ dotenv.config();
 const app = express();
 let STATES = {
   button: "Off",
+  sonar: 0,
 };
 
 function controlState(element, state) {
   switch (element) {
     case "button": {
       STATES.button = state;
+      break;
+    }
+    case "sonar": {
+      STATES.sonar = state;
       break;
     }
     default:
@@ -40,7 +45,7 @@ app.get("/", (req, res) => {
 app.get("/state/:element", (req, res) => {
   const { element } = req.params;
   res.status(200).json({
-    message: element + " state is now " + STATES[element],
+    message: "Data retrived successfully",
     data: {
       element,
       state: STATES[element],
@@ -51,7 +56,13 @@ app.post("/state/:element", (req, res) => {
   const { state } = req.body;
   const { element } = req.params;
   controlState(element, state);
-  res.status(200).json({ message: element + " state is now " + state });
+  res.status(200).json({
+    message: "Data updated successfully",
+    data: {
+      element,
+      state: STATES[element],
+    },
+  });
 });
 async function startServer() {
   const PORT = process.env.PORT || 8000;
