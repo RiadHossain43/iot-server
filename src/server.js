@@ -4,7 +4,7 @@ const express = require("express");
 dotenv.config();
 const app = express();
 let STATES = {
-  button: "On",
+  button: "Off",
 };
 
 function controlState(element, state) {
