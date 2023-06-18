@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Centered Buttons</title>
+  <style>
+    /* Center the buttons */
+    .button-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Style the buttons */
+    .button {
+      background-color: #1d8bf8;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px;
+    }
+
+    /* Add hover effect */
+    .button:hover {
+      background-color: #0e5aa7;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="button-container">
+    <button class="button" id="button1">Led (OFF)</button>
+    <button class="button">Button 2</button>
+  </div>
+  <script>
+    // Function to toggle Led state and send POST request
+    var button1 = document.getElementById("button1");
+    function controlLedState(state) {
+      if (state === "On") {
+        button1.innerHTML = "Led (ON)";
+        button1.style.backgroundColor = "#28a745";
+      } else {
+        button1.innerHTML = "Led (OFF)";
+        button1.style.backgroundColor = "#1d8bf8";
+      }
+    }
+    function toggleButton1() {
+      var state = button1.innerHTML.includes("ON") ? "Off" : "On";
+      fetch("/state/button", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ state: state })
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      controlLedState(state)
+    }
+    (function () {
+      fetch("/state/button")
+        .then(response => response.json())
+        .then(data => {
+          controlLedState(data.data.state)
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    })()
+    // Add event listener to Led
+    document.getElementById("button1").addEventListener("click", toggleButton1);
+  </script>
+</body>
+
+</html>
