@@ -4,16 +4,57 @@
 <head>
   <title>Centered Buttons</title>
   <style>
-    /* Center the buttons */
     * {
       font-family: sans-serif;
     }
+
+    /* Navbar */
+    .navbar {
+      background-color: #ffffff;
+      border-bottom: 2px solid #e5e7eb;
+      padding: 10px;
+    }
+
+    .navbar-text {
+      font-size: 20px;
+    }
+
+    /* Cards */
+    .card-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 50px;
+    }
+
+    .card {
+      width: 250px;
+      border: 1px solid #e5e7eb;
+      border-radius: 5px;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+    }
+
+    /* Project Submission Section */
+    .project-section {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .project-text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    /* Center the buttons */
 
     .button-container {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 20vh;
     }
 
     /* Style the buttons */
@@ -37,9 +78,42 @@
 </head>
 
 <body>
+
+  <div class="navbar">
+    <p class="navbar-text">IOT based remote control</p>
+  </div>
+
   <div class="button-container">
     <button class="button" id="button1">Led (OFF)</button>
     <p>Sonar distance is now <span id="distance">0</span></p>
+  </div>
+  <div class="card-container">
+    <div class="card">
+      <p>Name: MD Reyad Hossain</p>
+      <p>Roll: 1809027</p>
+    </div>
+
+    <div class="card">
+      <p>Name: Sajuti Dey</p>
+      <p>Roll: 1809026</p>
+    </div>
+
+    <div class="card">
+      <p>Name: Ehteshamul Haque Tanim</p>
+      <p>Roll: 1809029</p>
+    </div>
+
+    <div class="card">
+      <p>Name: Muntasib Muhib Chawdhury</p>
+      <p>Roll: 1809007</p>
+    </div>
+  </div>
+
+  <div class="project-section">
+    <p class="project-text">Project Submitted To:</p>
+    <p>Dr. A. B. M. Aowlad Hossain</p>
+    <p>Professor</p>
+    <p>Department of Electronics and Communication Engineering</p>
   </div>
   <script>
     // Function to toggle Led state and send POST request
